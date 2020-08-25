@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart';
 
 class RegisterUserServices{
-  final String url = "http://192.168.1.13:8000/api/v1/patientfamily";
+  final String url = "http://192.168.1.8:8000/api/v1/patientfamily";
   Client client = Client();
 
   Future<String> registerUser(String nik,String nama,String alamat,String password,String hp) async{

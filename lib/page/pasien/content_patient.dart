@@ -68,7 +68,7 @@ class _ContentPatientState extends State<ContentPatient> {
                 child: CircleAvatar(
                     maxRadius: 40.0,
                     backgroundImage: NetworkImage(
-                        'https://images8.alphacoders.com/104/1040682.jpg')),
+                        'https://playy.world/content/public/user/default.png')),
               ),
               Expanded(
                 child: Column(

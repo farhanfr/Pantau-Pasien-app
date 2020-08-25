@@ -7,7 +7,7 @@ import 'package:pantau_pasien/other/SharedPref.dart';
 import 'package:pantau_pasien/page/bottom_navigation/bottom_navigation_main.dart';
 
 class LoginUserServices{
-  final String url = "http://192.168.1.13:8000/api/v1/patientfamily";
+  final String url = "http://192.168.1.8:8000/api/v1/patientfamily";
   Client client = Client();
 
   Future<String> loginUser(String nik,String password) async{

@@ -6,7 +6,7 @@ import 'package:pantau_pasien/model/alert_condition/AlertConditionPatientDetail.
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AlertConditionPatientServices {
-  final String url = "http://192.168.1.13:8000/api/v1/alertcondition";
+  final String url = "http://192.168.1.8:8000/api/v1/alertcondition";
   Client client = Client();
 
   Future<List<AlertConditionPatient>> getAlertCondition() async {
@@ -31,17 +31,17 @@ class AlertConditionPatientServices {
     }
   }
 
-  Future<List<AlertConditionPatientDetail>> getAlertConditionByPatient(
+  Future<List<AlertConditionPatient>> getAlertConditionByPatient(
       id) async {
-    List<AlertConditionPatientDetail> _list = [];
-    final response = await client.get("$url/get/all/id/?id=$id");
+    List<AlertConditionPatient> _list = [];
+    final response = await client.get("$url/get/all/patientid/?id=$id");
     if (response.statusCode == 200) {
       Map<String, dynamic> map = jsonDecode(response.body);
       print(map);
       if (map["status"] == true) {
         List<dynamic> data = map["data"];
         for (Map i in data) {
-          _list.add(AlertConditionPatientDetail.fromJson(i));
+          _list.add(AlertConditionPatient.fromJson(i));
         }
       }
 

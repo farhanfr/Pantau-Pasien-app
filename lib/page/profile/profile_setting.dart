@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:pantau_pasien/other/SharedPref.dart';
 import 'package:pantau_pasien/page/common/login.dart';
 
@@ -14,7 +15,7 @@ class ProfileSetting extends StatelessWidget {
           title: Text("Logout",style: TextStyle(color: Colors.red),),
           onTap: (){
             SharedPref().removeValues("nik");
-            Navigator.pushReplacement(context, MaterialPageRoute(builder: (e) => LoginPage()));
+            Get.off(LoginPage());
           },
         ),
       ],

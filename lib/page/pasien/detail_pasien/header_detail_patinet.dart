@@ -40,10 +40,10 @@ class HeaderDetailPatient extends StatelessWidget {
                           CircleAvatar(
                             maxRadius: 70.0,
                             backgroundImage: NetworkImage(
-                                'https://ichef.bbci.co.uk/news/660/cpsprodpb/12A9B/production/_111434467_gettyimages-1143489763.jpg')
+                                'https://playy.world/content/public/user/default.png')
                                 ),
                                 SizedBox(height: 24.0,),
-                                Text("asas",style: TextStyle(color: Colors.white,fontSize: 18.0),)
+                                Text(name,style: TextStyle(color: Colors.white,fontSize: 18.0),)
                         ],
                       ),
                     )

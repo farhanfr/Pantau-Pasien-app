@@ -5,7 +5,7 @@ import 'package:pantau_pasien/model/Patient.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PatientServices {
-  final String url = "http://192.168.1.13:8000/api/v1/patient";
+  final String url = "http://192.168.1.8:8000/api/v1/patient";
   Client client = Client();
 
   Future<List<Patient>> getPatientByNik() async {

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:from_css_color/from_css_color.dart';
+import 'package:get/get.dart';
+import 'package:pantau_pasien/model/alert_condition/AlertConditionPatient.dart';
 import 'package:pantau_pasien/model/alert_condition/AlertConditionPatientDetail.dart';
+import 'package:pantau_pasien/page/Detail_Alert_Condition/main_detail_alert_condition.dart';
 import 'package:pantau_pasien/service/alert_condition_patient_services.dart';
 
 class DetailAnnounceConditionPatient extends StatefulWidget {
@@ -32,7 +35,7 @@ class _DetailAnnounceConditionPatientState extends State<DetailAnnounceCondition
                   "Something wrong with message: ${snapshot.error.toString()}"),
             );
           } else if (snapshot.connectionState == ConnectionState.done) {
-            List<AlertConditionPatientDetail> alertCondition = snapshot.data;
+            List<AlertConditionPatient> alertCondition = snapshot.data;
             print("DATANEE : ${snapshot.data}");
             return  buildListView(alertCondition);
           } else {
@@ -41,7 +44,7 @@ class _DetailAnnounceConditionPatientState extends State<DetailAnnounceCondition
         });
   }
 
-  Container buildListView(List<AlertConditionPatientDetail> alertCondition) {
+  Container buildListView(List<AlertConditionPatient> alertCondition) {
     return alertCondition.length == 0 ? Container(child: Center(child: Text("Pemberitahuan tidak ada"))): 
     Container(
       child: ListView.builder(
@@ -55,54 +58,64 @@ class _DetailAnnounceConditionPatientState extends State<DetailAnnounceCondition
     );
   }
 
-  Container buildContainer(BuildContext context, int index, List<AlertConditionPatientDetail> alertCondition) {
+  Container buildContainer(BuildContext context, int index, List<AlertConditionPatient> alertCondition) {
     return Container(
-        child: Container(
+        child: GestureDetector(
+          onTap: (){
+            Get.to(MainDetailAlertCondition(
+            namePatient: alertCondition[index].patient.name,
+            datePost: alertCondition[index].datepost,
+            titlePost: alertCondition[index].title,
+            descPost: alertCondition[index].message,
+          ));
+          },
+                  child: Container(
       margin: const EdgeInsets.only(left: 25.0, right: 25.0, bottom: 10.0),
       padding: EdgeInsets.symmetric(vertical: 20.0),
       // height: 260,
       width: MediaQuery.of(context).size.width * 0.90,
       decoration: BoxDecoration(
-        color: fromCSSColor("#"+alertCondition[index].color),
-        borderRadius: BorderRadius.circular(5),
+          color: fromCSSColor(alertCondition[index].color),
+          borderRadius: BorderRadius.circular(5),
       ),
       child: Container(
-        child: Row(
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(left: 30.0, right: 30.0),
-              child: Icon(
-                Icons.people,
-                size: 60.0,
-                color: Colors.white,
+          child: Row(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(left: 30.0, right: 30.0),
+                child: Icon(
+                  Icons.speaker_notes,
+                  size: 60.0,
+                  color: Colors.white,
+                ),
               ),
-            ),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(alertCondition[index].title,
-                      style: TextStyle(
-                          fontSize: 14.0,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold)),
-                  SizedBox(height: 10.0,),
-                  Text(alertCondition[index].message,
-                      style: TextStyle(fontSize: 14.0, color: Colors.white)),
-                  Container(
-                    margin: EdgeInsets.only(right: 10.0, top: 10.0),
-                    alignment: Alignment.bottomRight,
-                    child: Text(
-                      "10 Juli 2020 , 10 : 02",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  )
-                ],
-              ),
-            )
-          ],
-        ),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(alertCondition[index].title,
+                        style: TextStyle(
+                            fontSize: 14.0,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold),maxLines: 2,),
+                    SizedBox(height: 10.0,),
+                    Text(alertCondition[index].message,
+                        style: TextStyle(fontSize: 14.0, color: Colors.white),maxLines: 3,),
+                    Container(
+                      margin: EdgeInsets.only(right: 10.0, top: 10.0),
+                      alignment: Alignment.bottomRight,
+                      child: Text(
+                        alertCondition[index].datepost,
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    )
+                  ],
+                ),
+              )
+            ],
+          ),
       ),
-    ));
+    ),
+        ));
   }
 }

@@ -20,64 +20,72 @@ class _BottomNavigationMainState extends State<BottomNavigationMain> {
     GlobalKey<NavigatorState>(),
     GlobalKey<NavigatorState>()
   ];
-  
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-        onWillPop: () async {
+      onWillPop: () async {
         final isFirstRouteInCurrentTab =
-        !await _navigatorKeys[_currentIndex].currentState.maybePop();
+            !await _navigatorKeys[_currentIndex].currentState.maybePop();
 
         // let system handle back button if we're on the first route
         return isFirstRouteInCurrentTab;
       },
-        child: Scaffold(
-        backgroundColor: Colors.white,
-        bottomNavigationBar: SizedBox(
-          height: 80.0,
-                  child: BottomNavigationBar(   
-            backgroundColor: Colors.white,     
-            currentIndex: _currentIndex,
-            elevation: 30.0,
-            type: BottomNavigationBarType.fixed,
-            items: [
-              BottomNavigationBarItem(
-                icon: Icon(Icons.home,size: 30.0,),
-                title: Text("Dashboard"),
-                backgroundColor: Colors.blue,
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.person,size: 30.0,),
-                title: Text("Profile"),
-                backgroundColor: Colors.blue
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.chat,size: 30.0,),
-                title: Text("Chat perawat"),
-                backgroundColor: Colors.blue
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.people,size: 30.0,),
-                title: Text("Pasien"),
-                backgroundColor: Colors.blue
-              ),
-            ],
-            onTap: (index){
-              setState(() {
-                _currentIndex = index;
-              });
-            },
+      child: Scaffold(
+          backgroundColor: Colors.white,
+          bottomNavigationBar: SizedBox(
+            height: 80.0,
+            child: BottomNavigationBar(
+              backgroundColor: Colors.white,
+              currentIndex: _currentIndex,
+              elevation: 30.0,
+              type: BottomNavigationBarType.fixed,
+              items: [
+                BottomNavigationBarItem(
+                  icon: Icon(
+                    Icons.home,
+                    size: 30.0,
+                  ),
+                  title: Text("Dashboard"),
+                  backgroundColor: Colors.blue,
+                ),
+                BottomNavigationBarItem(
+                    icon: Icon(
+                      Icons.person,
+                      size: 30.0,
+                    ),
+                    title: Text("Profile"),
+                    backgroundColor: Colors.blue),
+                BottomNavigationBarItem(
+                    icon: Icon(
+                      Icons.chat,
+                      size: 30.0,
+                    ),
+                    title: Text("Chat perawat"),
+                    backgroundColor: Colors.blue),
+                BottomNavigationBarItem(
+                    icon: Icon(
+                      Icons.people,
+                      size: 30.0,
+                    ),
+                    title: Text("Pasien"),
+                    backgroundColor: Colors.blue),
+              ],
+              onTap: (index) {
+                setState(() {
+                  _currentIndex = index;
+                });
+              },
+            ),
           ),
-        ),
-        body: Stack(
-          children: <Widget>[
-            _buildOffstageNavigator(0),
-            _buildOffstageNavigator(1),
-            _buildOffstageNavigator(2),
-            _buildOffstageNavigator(3),
-          ],
-        )
-      ),
+          body: Stack(
+            children: <Widget>[
+              _buildOffstageNavigator(0),
+              _buildOffstageNavigator(1),
+              _buildOffstageNavigator(2),
+              _buildOffstageNavigator(3),
+            ],
+          )),
     );
   }
 
@@ -98,9 +106,9 @@ class _BottomNavigationMainState extends State<BottomNavigationMain> {
         ].elementAt(index);
       },
     };
-}
+  }
 
-Widget _buildOffstageNavigator(int index) {
+  Widget _buildOffstageNavigator(int index) {
     var routeBuilders = _routeBuilders(context, index);
 
     return Offstage(
@@ -116,5 +124,3 @@ Widget _buildOffstageNavigator(int index) {
     );
   }
 }
-
-

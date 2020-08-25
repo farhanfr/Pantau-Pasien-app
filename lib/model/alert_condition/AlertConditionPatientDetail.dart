@@ -27,7 +27,7 @@ class AlertConditionPatientDetail {
     String color;
     String title;
     String message;
-    DateTime datepost;
+    String datepost;
 
     factory AlertConditionPatientDetail.fromJson(Map<String, dynamic> json) => AlertConditionPatientDetail(
         id: json["id"],
@@ -37,7 +37,7 @@ class AlertConditionPatientDetail {
         color: json["color"],
         title: json["title"],
         message: json["message"],
-        datepost: DateTime.parse(json["datepost"]),
+        datepost: json["datepost"],
     );
 
     Map<String, dynamic> toJson() => {
@@ -48,6 +48,6 @@ class AlertConditionPatientDetail {
         "color": color,
         "title": title,
         "message": message,
-        "datepost": "${datepost.year.toString().padLeft(4, '0')}-${datepost.month.toString().padLeft(2, '0')}-${datepost.day.toString().padLeft(2, '0')}",
+        "datepost": datepost,
     };
 }

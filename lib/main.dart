@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pantau_pasien/page/common/on_boarding_page.dart';
+import 'package:pantau_pasien/page/splash_screen/main_splash_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -40,7 +41,7 @@ class _MyAppState extends State<MyApp> {
         // closer together (more dense) than on mobile platforms.
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: OnBoardingPage(),
+      home: MainSplashScreen(),
     );
   }
 }
