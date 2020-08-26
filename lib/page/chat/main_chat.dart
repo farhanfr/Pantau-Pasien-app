@@ -6,7 +6,9 @@ class MainChatPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        HeaderChat()
+        HeaderChat(),
+        SizedBox(height: 50.0,),
+        Image.asset("assets/img/underdev.png",width: 300.0,)
       ],
     );
   }

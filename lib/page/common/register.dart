@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:pantau_pasien/const/color.dart';
+import 'package:pantau_pasien/page/common/login.dart';
 import 'package:pantau_pasien/service/register_user_services.dart';
-
-final GlobalKey<ScaffoldState> _scaffoldState = GlobalKey<ScaffoldState>();
 
 class RegisterPage extends StatefulWidget {
   @override
@@ -25,15 +25,16 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
+    final GlobalKey<ScaffoldState> _scaffoldState = GlobalKey<ScaffoldState>();
     return Scaffold(
       key: _scaffoldState,
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       body: DecoratedBox(
         decoration: BoxDecoration(
-          image: DecorationImage(image: AssetImage("assets/img/bgauth.png"),fit: BoxFit.cover)
-        ),
-              child: Padding(
+            image: DecorationImage(
+                image: AssetImage("assets/img/bgauth.png"), fit: BoxFit.cover)),
+        child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 20.0),
             child: Form(
                 child: Center(
@@ -124,21 +125,24 @@ class _RegisterPageState extends State<RegisterPage> {
                           onPressed: () {
                             registerUserServices
                                 .registerUser(
-                                   nikInp.text,
+                                    nikInp.text,
                                     namaInp.text,
                                     alamatInp.text,
                                     passwordInp.text,
                                     hpInp.text)
                                 .then((result) {
                               if (result == 'success') {
-                                _scaffoldState.currentState.showSnackBar(SnackBar(
+                                _scaffoldState.currentState
+                                    .showSnackBar(SnackBar(
                                   content: Text("Berhasil Registerasi"),
                                 ));
-                                nikInp.clear();namaInp.clear();alamatInp.clear();passwordInp.clear();hpInp.clear();
+                                nikInp.clear();
+                                namaInp.clear();
+                                alamatInp.clear();
+                                passwordInp.clear();
+                                hpInp.clear();
                               } else {
-                                _scaffoldState.currentState.showSnackBar(SnackBar(
-                                  content: Text("Maaf gagal registerasi"),
-                                ));
+                                print("gagal daftar");
                               }
                             });
                           }),
@@ -164,7 +168,9 @@ class _RegisterPageState extends State<RegisterPage> {
                             "LOGIN",
                             style: TextStyle(color: primaryColor),
                           ),
-                          onPressed: () {}),
+                          onPressed: () {
+                            Get.to(LoginPage());
+                          }),
                     ),
                   ],
                 ),

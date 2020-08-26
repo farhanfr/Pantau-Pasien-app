@@ -44,7 +44,8 @@ class _ContentPatientState extends State<ContentPatient> {
     }
 
   Expanded buildExpanded(List<Patient> patient) {
-    return Expanded(
+    return patient.length == 0 ? Expanded(child: Center(child: Text("Belum ada pasien"),)):
+    Expanded(
     child: ListView.builder(
       padding: EdgeInsets.zero,
       physics: AlwaysScrollableScrollPhysics(),

@@ -47,7 +47,7 @@ class _AnnounceConditionPatientState extends State<AnnounceConditionPatient> {
           padding: EdgeInsets.zero,
           physics: NeverScrollableScrollPhysics(),
           shrinkWrap: true,
-          itemCount: alertCondition.length,
+          itemCount: alertCondition.length <= 5 ? alertCondition.length : 5,
           itemBuilder: (BuildContext context, int index) {
             return buildContainerContent(context, index, alertCondition);
           }),
@@ -63,6 +63,7 @@ class _AnnounceConditionPatientState extends State<AnnounceConditionPatient> {
             datePost: alertCondition[index].datepost,
             titlePost: alertCondition[index].title,
             descPost: alertCondition[index].message,
+            nameNurse: alertCondition[index].nurse.name,
           ));
         },
         child: Container(
@@ -111,6 +112,7 @@ class _AnnounceConditionPatientState extends State<AnnounceConditionPatient> {
           ),
         ),
     ),
-      ));
+      )
+    );
   }
 }

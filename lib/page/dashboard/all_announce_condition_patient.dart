@@ -1,21 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:from_css_color/from_css_color.dart';
 import 'package:get/get.dart';
+import 'package:pantau_pasien/const/color.dart';
 import 'package:pantau_pasien/model/alert_condition/AlertConditionPatient.dart';
-import 'package:pantau_pasien/model/alert_condition/AlertConditionPatientDetail.dart';
 import 'package:pantau_pasien/page/Detail_Alert_Condition/main_detail_alert_condition.dart';
 import 'package:pantau_pasien/service/alert_condition_patient_services.dart';
 
-class DetailAnnounceConditionPatient extends StatefulWidget {
-  final int idPatient;
-  DetailAnnounceConditionPatient({this.idPatient});
-
+class AllAnnounceConditionPatient extends StatefulWidget {
   @override
-  _DetailAnnounceConditionPatientState createState() =>
-      _DetailAnnounceConditionPatientState();
+  _AllAnnounceConditionPatientState createState() => _AllAnnounceConditionPatientState();
 }
 
-class _DetailAnnounceConditionPatientState extends State<DetailAnnounceConditionPatient> {
+class _AllAnnounceConditionPatientState extends State<AllAnnounceConditionPatient> {
   AlertConditionPatientServices alertConditionPatientServices;
 
   @override
@@ -26,8 +22,13 @@ class _DetailAnnounceConditionPatientState extends State<DetailAnnounceCondition
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: alertConditionPatientServices.getAlertConditionByPatient(widget.idPatient),
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: primaryColor,
+        title: Text("Pemberitahuan"),
+      ),
+      body: FutureBuilder(
+        future: alertConditionPatientServices.getAlertCondition(),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return Center(
@@ -37,49 +38,52 @@ class _DetailAnnounceConditionPatientState extends State<DetailAnnounceCondition
           } else if (snapshot.connectionState == ConnectionState.done) {
             List<AlertConditionPatient> alertCondition = snapshot.data;
             print("DATANEE : ${snapshot.data}");
-            return  buildListView(alertCondition);
+            return buildContainerListBuilder(alertCondition);
           } else {
             return Center(child: CircularProgressIndicator());
           }
-        });
-  }
-
-  Container buildListView(List<AlertConditionPatient> alertCondition) {
-    return alertCondition.length == 0 ? Container(child: Center(child: Text("Pemberitahuan tidak ada"))): 
-    Container(
-      child: ListView.builder(
-        padding: EdgeInsets.zero,
-        physics: NeverScrollableScrollPhysics(),
-        shrinkWrap: true,
-        itemCount: alertCondition.length <= 5 ? alertCondition.length : 5,
-        itemBuilder: (BuildContext context, int index) {
-          return buildContainer(context,index,alertCondition);
-        }),
+        }
+      ),
     );
   }
 
-  Container buildContainer(BuildContext context, int index, List<AlertConditionPatient> alertCondition) {
+   Container buildContainerListBuilder(List<AlertConditionPatient> alertCondition) {
+    return alertCondition.length == 0 ? Container(child: Center(child: Text("Pemberitahuan tidak ada"),)):
+    Container(
+      child: ListView.builder( 
+        // padding: EdgeInsets.symmetric(vertical: 10.0),       
+          physics: ScrollPhysics(),
+          scrollDirection: Axis.vertical,
+          shrinkWrap: true,
+          itemCount: alertCondition.length,
+          itemBuilder: (BuildContext context, int index) {
+            return buildContainerContent(context, index, alertCondition);
+          }),
+    );
+  }
+
+  Container buildContainerContent(BuildContext context, int index,List<AlertConditionPatient> alertCondition) {
     return Container(
-        child: GestureDetector(
-          onTap: (){
-            Get.to(MainDetailAlertCondition(
+      child: GestureDetector(
+        onTap: (){
+          Get.to(MainDetailAlertCondition(
             namePatient: alertCondition[index].patient.name,
             datePost: alertCondition[index].datepost,
             titlePost: alertCondition[index].title,
             descPost: alertCondition[index].message,
             nameNurse: alertCondition[index].nurse.name,
           ));
-          },
-                  child: Container(
-      margin: const EdgeInsets.only(left: 25.0, right: 25.0, bottom: 10.0),
-      padding: EdgeInsets.symmetric(vertical: 20.0),
-      // height: 260,
-      width: MediaQuery.of(context).size.width * 0.90,
-      decoration: BoxDecoration(
+        },
+        child: Container(
+        margin: const EdgeInsets.only(left: 20.0, right: 20.0,top: 20.0),
+        padding: EdgeInsets.symmetric(vertical: 20.0),
+        // height: 260,
+        width: MediaQuery.of(context).size.width * 0.90,
+        decoration: BoxDecoration(
           color: fromCSSColor(alertCondition[index].color),
           borderRadius: BorderRadius.circular(5),
-      ),
-      child: Container(
+        ),
+        child: Container(
           child: Row(
             children: <Widget>[
               Padding(
@@ -95,13 +99,12 @@ class _DetailAnnounceConditionPatientState extends State<DetailAnnounceCondition
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(alertCondition[index].title,
+                        style: TextStyle(fontSize: 14.0, color: Colors.white),maxLines: 2,),
+                    Text(alertCondition[index].patient.name,
                         style: TextStyle(
-                            fontSize: 14.0,
+                            fontSize: 24.0,
                             color: Colors.white,
-                            fontWeight: FontWeight.bold),maxLines: 2,),
-                    SizedBox(height: 10.0,),
-                    Text(alertCondition[index].message,
-                        style: TextStyle(fontSize: 14.0, color: Colors.white),maxLines: 3,),
+                            fontWeight: FontWeight.bold)),
                     Container(
                       margin: EdgeInsets.only(right: 10.0, top: 10.0),
                       alignment: Alignment.bottomRight,
@@ -115,8 +118,10 @@ class _DetailAnnounceConditionPatientState extends State<DetailAnnounceCondition
               )
             ],
           ),
-      ),
+        ),
     ),
-        ));
+      )
+    );
+
   }
 }

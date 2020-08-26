@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 import 'package:pantau_pasien/const/color.dart';
+import 'package:pantau_pasien/page/bottom_navigation/bottom_navigation_main.dart';
 import 'package:pantau_pasien/page/common/register.dart';
 import 'package:pantau_pasien/service/login_user_services.dart';
 
@@ -14,6 +17,15 @@ class _LoginPageState extends State<LoginPage> {
   LoginUserServices loginUserServices;
   TextEditingController nikInp = new TextEditingController();
   TextEditingController passwordInp = new TextEditingController();
+
+  void toast(String msg) {
+    Fluttertoast.showToast(
+        msg: msg,
+        toastLength: Toast.LENGTH_SHORT,
+        backgroundColor: primaryColor,
+        textColor: Colors.white,
+        fontSize: 16.0);
+  }
 
   @override
   void initState() {
@@ -29,9 +41,9 @@ class _LoginPageState extends State<LoginPage> {
       backgroundColor: Colors.white,
       body: DecoratedBox(
         decoration: BoxDecoration(
-          image: DecorationImage(image: AssetImage("assets/img/bgauth.png"),fit: BoxFit.cover)
-        ),
-              child: Padding(
+            image: DecorationImage(
+                image: AssetImage("assets/img/bgauth.png"), fit: BoxFit.cover)),
+        child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 20.0),
             child: Form(
                 child: Center(
@@ -82,19 +94,32 @@ class _LoginPageState extends State<LoginPage> {
                             style: TextStyle(color: Colors.white),
                           ),
                           onPressed: () {
-                            loginUserServices
-                                .loginUser(nikInp.text, passwordInp.text)
-                                .then((result) {
-                              if (result == 'success') {
-                                _scaffoldState.currentState.showSnackBar(SnackBar(
-                                  content: Text("Berhasil Registerasi"),
-                                ));
-                              } else {
-                                _scaffoldState.currentState.showSnackBar(SnackBar(
-                                  content: Text("Gagal login"),
-                                ));
-                              }
-                            });
+                            if (nikInp.text.isEmpty &&
+                                passwordInp.text.isEmpty) {
+                              toast("nik dan password masih kosong");
+                            } else if (nikInp.text.isEmpty) {
+                              toast("nik masih kosong");
+                            } else if (passwordInp.text.isEmpty) {
+                              toast("password masih kosong");
+                            } else {
+                              loginUserServices
+                                  .loginUser(nikInp.text, passwordInp.text)
+                                  .then((result) {
+                                if (result == 'success') {
+                                  print("Berhasil login");
+                                  Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (e) =>
+                                              BottomNavigationMain()));
+                                  // _scaffoldState.currentState.showSnackBar(SnackBar(
+                                  //   content: Text("Berhasil Registerasi"),
+                                  // ));
+                                } else {
+                                  toast("Nik atau password salah");
+                                }
+                              });
+                            }
                           }),
                     ),
                     SizedBox(height: 12.0),
