@@ -21,7 +21,6 @@ class PatientFamilyServices {
         data.entries.forEach((e) {
           _list.add(PatientFamily.fromJson(map["data"]));
         });
-        print("TESSSS WOYYY $_list");
         // for (Map i in data) {
         //   _list.add(PatientFamily.fromJson(i));
         // }

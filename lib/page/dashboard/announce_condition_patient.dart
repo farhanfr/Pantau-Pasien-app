@@ -59,11 +59,7 @@ class _AnnounceConditionPatientState extends State<AnnounceConditionPatient> {
       child: GestureDetector(
         onTap: (){
           Get.to(MainDetailAlertCondition(
-            namePatient: alertCondition[index].patient.name,
-            datePost: alertCondition[index].datepost,
-            titlePost: alertCondition[index].title,
-            descPost: alertCondition[index].message,
-            nameNurse: alertCondition[index].nurse.name,
+            id: alertCondition[index].id.toString(),
           ));
         },
         child: Container(

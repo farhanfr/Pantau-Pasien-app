@@ -28,6 +28,7 @@ class _MainSplashScreenState extends State<MainSplashScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            Image.asset("assets/img/appicon.png"),
             Text(
               "Pantau Pasien",
               // textAlign: TextAlign.center,

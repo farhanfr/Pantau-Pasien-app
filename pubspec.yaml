@@ -35,10 +35,18 @@ dependencies:
   from_css_color: ^0.1.1
   get: ^3.4.6
   fluttertoast: ^7.0.2
+  
+
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+  flutter_launcher_icons: ^0.7.5
+
+flutter_icons:
+  image_path: "assets/img/appicon.png"
+  android: "launcher_icon"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

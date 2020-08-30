@@ -50,4 +50,23 @@ class AlertConditionPatientServices {
       return null;
     }
   }
+
+  Future<List<AlertConditionPatient>> getAlertConditionById(
+      id) async {
+    List<AlertConditionPatient> _list = [];
+    final response = await client.get("$url/get/all/id/?id=$id");
+    if (response.statusCode == 200) {
+      Map<String, dynamic> map = jsonDecode(response.body);
+      print(map);
+      if (map["status"] == true) {
+        List<dynamic> data = map["data"];
+        for (Map i in data) {
+          _list.add(AlertConditionPatient.fromJson(i));
+        }
+      }
+      return _list;
+    } else {
+      return null;
+    }
+  }
 }

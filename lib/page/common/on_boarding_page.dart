@@ -15,7 +15,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
 
   void _onIntroEnd(context) {
     SharedPref().addIntToSF("isOnBoarding", 1);
-    Navigator.of(context).push(
+    Navigator.of(context).pushReplacement(
       MaterialPageRoute(builder: (_) => LoginPage()),
     );
   }
@@ -64,36 +64,21 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
       key: introKey,
       pages: [
         PageViewModel(
-          title: "Fractional shares",
-          body:
-              "Instead of having to buy an entire share, invest any amount you want.",
+          title: "Memantau Pasien bisa dimana saja",
+          body:"Anda bisa memantau kondisi pasien dimana saja dan kapanpun melalui aplikasi Pantau Pasien",
           image: _buildImage('onboard'),
           decoration: pageDecoration,
         ),
         PageViewModel(
-          title: "Learn as you go",
-          body:
-              "Download the Stockpile app and master the market with our mini-lesson.",
+          title: "Mencegah penularan dengan pasien",
+          body:"Anda tidak perlu mengunjungi rumah sakit untuk memantau kondisi pasien agar tidak tertular penyakit dengan pasien",
           image: _buildImage('onboard'),
           decoration: pageDecoration,
         ),
         PageViewModel(
-          title: "Another title page",
-          body: "Another beautiful body text for this example onboarding",
+          title: "Layanan Mudah dan Gratis",
+          body: "Layanan pada aplikasi tidak dipungut biaya apapun dan mudah digunakan oleh Anda",
           image: _buildImage('onboard'),
-          footer: RaisedButton(
-            onPressed: () {
-              introKey.currentState?.animateScroll(0);
-            },
-            child: const Text(
-              'FooButton',
-              style: TextStyle(color: Colors.white),
-            ),
-            color: Colors.lightBlue,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8.0),
-            ),
-          ),
           decoration: pageDecoration,
         ),
       ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:pantau_pasien/const/color.dart';
 import 'package:pantau_pasien/page/common/login.dart';
@@ -16,6 +17,15 @@ class _RegisterPageState extends State<RegisterPage> {
   TextEditingController alamatInp = new TextEditingController();
   TextEditingController passwordInp = new TextEditingController();
   TextEditingController hpInp = new TextEditingController();
+
+  void toast(String msg) {
+    Fluttertoast.showToast(
+        msg: msg,
+        toastLength: Toast.LENGTH_SHORT,
+        backgroundColor: primaryColor,
+        textColor: Colors.white,
+        fontSize: 16.0);
+  }
 
   @override
   void initState() {
@@ -123,28 +133,40 @@ class _RegisterPageState extends State<RegisterPage> {
                             style: TextStyle(color: Colors.white),
                           ),
                           onPressed: () {
-                            registerUserServices
-                                .registerUser(
-                                    nikInp.text,
-                                    namaInp.text,
-                                    alamatInp.text,
-                                    passwordInp.text,
-                                    hpInp.text)
-                                .then((result) {
-                              if (result == 'success') {
-                                _scaffoldState.currentState
-                                    .showSnackBar(SnackBar(
-                                  content: Text("Berhasil Registerasi"),
-                                ));
-                                nikInp.clear();
-                                namaInp.clear();
-                                alamatInp.clear();
-                                passwordInp.clear();
-                                hpInp.clear();
-                              } else {
-                                print("gagal daftar");
-                              }
-                            });
+                            if (nikInp.text.isEmpty) {
+                              toast("Nik masih kosong");
+                            } else if (namaInp.text.isEmpty) {
+                              toast("Nama masih kosong");
+                            } else if (alamatInp.text.isEmpty) {
+                              toast("Alamat masih kosong");
+                            } else if (passwordInp.text.isEmpty) {
+                              toast("Password masih kosong");
+                            } else if (hpInp.text.isEmpty) {
+                              toast("No hp masih kosong");
+                            } else {
+                              registerUserServices
+                                  .registerUser(
+                                      nikInp.text,
+                                      namaInp.text,
+                                      alamatInp.text,
+                                      passwordInp.text,
+                                      hpInp.text)
+                                  .then((result) {
+                                if (result == 'success') {
+                                  _scaffoldState.currentState
+                                      .showSnackBar(SnackBar(
+                                    content: Text("Berhasil Registerasi"),
+                                  ));
+                                  nikInp.clear();
+                                  namaInp.clear();
+                                  alamatInp.clear();
+                                  passwordInp.clear();
+                                  hpInp.clear();
+                                } else {
+                                  print("gagal daftar");
+                                }
+                              });
+                            }
                           }),
                     ),
                     SizedBox(height: 12.0),
